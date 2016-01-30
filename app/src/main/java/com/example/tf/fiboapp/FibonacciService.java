@@ -2,6 +2,7 @@ package com.example.tf.fiboapp;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -21,13 +22,14 @@ public class FibonacciService extends Service {
     static final int MSG_FIBO_SEQ = 2;
     private int newElement = 0;
     private Timer timer = new Timer();
-    Messenger clientMessenger = null;
+    private Messenger clientMessenger = null;
     private ArrayList<Integer> FibonacciSequence = new ArrayList<Integer>() {{
         add(1);
         add(1);
     }};
 
     final Messenger serviceMessenger = new Messenger(new IncomingHandler());
+    private final IBinder mBinder = new LocalBinder();
 
     class IncomingHandler extends Handler {
         @Override
@@ -44,10 +46,17 @@ public class FibonacciService extends Service {
         }
     }
 
+    public class LocalBinder extends Binder {
+        public FibonacciService getService() {
+            return FibonacciService.this;
+        }
+    }
 
     @Override
     public IBinder onBind(Intent intent) {
         return serviceMessenger.getBinder();
+        //Used for running test
+        //return mBinder;
     }
 
     private void startCalculation() {
@@ -63,18 +72,20 @@ public class FibonacciService extends Service {
         }
     }
 
-    private void FibonacciCalculation() {
+    public void FibonacciCalculation() {
         newElement = FibonacciSequence.get(FibonacciSequence.size()-1) +
                 FibonacciSequence.get(FibonacciSequence.size()-2);
         if(newElement <= Integer.MAX_VALUE && newElement >= 0) {
             FibonacciSequence.add(newElement);
-            sendMessageToUI(FibonacciSequence);
+            sendMessageToUI(FibonacciSequence);//Not used in testing
         } else {
-            timer.cancel();
+            timer.cancel();//Not used in testing
         }
 
     }
 
-
+    public ArrayList<Integer> getFibonacciSequence() {
+        return FibonacciSequence;
+    }
 
 }

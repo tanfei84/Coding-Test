@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
             msg.replyTo = clientMessenger;
             try {
                 serviceMessenger.send(msg);
-                Log.i("Main", "send a message to service with sender name" + clientMessenger.toString());
+                //Log.i("Main", "send a message to service with sender name" + clientMessenger.toString());
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
