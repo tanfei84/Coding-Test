@@ -33,7 +33,9 @@ captures/
 
 # Android Studio
 *.iml
-.idea/workspace.xml
-.idea/libraries
-
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/build
 
