@@ -15,10 +15,11 @@ import java.util.concurrent.TimeoutException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 /**
  * Created by TF on 1/30/2016.
+ * In order to run this test, a few changes have to be made in the FibonacciService class,
+ * because of the binder.
  */
 @MediumTest
 @RunWith(AndroidJUnit4.class)

@@ -59,19 +59,16 @@ public class FibonacciService extends Service {
         //return mBinder;
     }
 
+    /**
+     * Maintain a constant update rate for UI
+     */
     private void startCalculation() {
         timer.scheduleAtFixedRate(new TimerTask(){ public void run() {FibonacciCalculation();}}, 0, 500);
     }
 
-    private void sendMessageToUI(ArrayList<Long> fibonacciSequence) {
-        Message msg = Message.obtain(null, MSG_FIBO_SEQ, fibonacciSequence);
-        try {
-            clientMessenger.send(msg);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-    }
-
+    /**
+     * Calculate the new Fibonacci number and update the ArrayList
+     */
     public void FibonacciCalculation() {
         newElement = FibonacciSequence.get(FibonacciSequence.size()-1) +
                 FibonacciSequence.get(FibonacciSequence.size()-2);
@@ -81,7 +78,19 @@ public class FibonacciService extends Service {
         } else {
             timer.cancel();//Not used in testing
         }
+    }
 
+    /**
+     * Send the updated fibonacciSequence to UI
+     * @param fibonacciSequence
+     */
+    private void sendMessageToUI(ArrayList<Long> fibonacciSequence) {
+        Message msg = Message.obtain(null, MSG_FIBO_SEQ, fibonacciSequence);
+        try {
+            clientMessenger.send(msg);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     public ArrayList<Long> getFibonacciSequence() {
