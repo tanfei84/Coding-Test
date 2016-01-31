@@ -6,3 +6,4 @@ android:
 
 before_install:
  - chmod +x gradlew
+ - echo yes | android update sdk --filter extra-android-support --no-ui --force > /dev/null
