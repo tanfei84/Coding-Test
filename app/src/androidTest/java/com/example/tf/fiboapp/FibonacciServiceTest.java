@@ -2,9 +2,6 @@ package com.example.tf.fiboapp;
 
 import android.content.Intent;
 import android.os.IBinder;
-import android.os.Message;
-import android.os.Messenger;
-import android.os.RemoteException;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ServiceTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -46,11 +43,11 @@ public class FibonacciServiceTest {
 
         assertNotNull(service.getFibonacciSequence());
 
-        assertEquals(service.getFibonacciSequence().get(18).toString(), new String("4181"));
+        assertEquals(service.getFibonacciSequence().get(82).toString(), new String("99194853094755497"));
 
         assertEquals(service.getFibonacciSequence().get(44).toString(), new String("1134903170"));
 
-        int i = 46;
+        int i = 92;
         assertEquals(service.getFibonacciSequence().size(), i);
     }
 

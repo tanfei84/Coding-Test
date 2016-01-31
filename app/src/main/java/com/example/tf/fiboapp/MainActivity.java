@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     final Messenger clientMessenger = new Messenger(new mHandler());
     Messenger serviceMessenger = null;
     private ListView listview;
-    private ArrayAdapter<Integer> adapter;
+    private ArrayAdapter<Long> adapter;
     private ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className,
                                        IBinder service) {
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         bindService(new Intent(this, FibonacciService.class), mConnection,
                 Context.BIND_AUTO_CREATE);
         listview = (ListView) findViewById(R.id.listView1);
-        adapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_list_item_1);
+        adapter = new ArrayAdapter<Long>(this, android.R.layout.simple_list_item_1);
         listview.setAdapter(adapter);
     }
 
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
             switch (msg.what) {
                 case FibonacciService.MSG_FIBO_SEQ:
                     adapter.clear();
-                    adapter.addAll((ArrayList<Integer>) msg.obj);
+                    adapter.addAll((ArrayList<Long>) msg.obj);
                     adapter.notifyDataSetChanged();
                     break;
                 default:

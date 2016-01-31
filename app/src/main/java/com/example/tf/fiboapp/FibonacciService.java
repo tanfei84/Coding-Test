@@ -20,12 +20,12 @@ import java.util.TimerTask;
 public class FibonacciService extends Service {
     static final int MSG_READY_MAIN = 1;
     static final int MSG_FIBO_SEQ = 2;
-    private int newElement = 0;
+    private long newElement = 0;
     private Timer timer = new Timer();
     private Messenger clientMessenger = null;
-    private ArrayList<Integer> FibonacciSequence = new ArrayList<Integer>() {{
-        add(1);
-        add(1);
+    private ArrayList<Long> FibonacciSequence = new ArrayList<Long>() {{
+        add((long) 1);
+        add((long) 1);
     }};
 
     final Messenger serviceMessenger = new Messenger(new IncomingHandler());
@@ -37,7 +37,7 @@ public class FibonacciService extends Service {
             switch (msg.what) {
                 case MSG_READY_MAIN:
                     clientMessenger = msg.replyTo;
-                    Log.i("Service", "Got the Ready Message from Main");
+                    //Log.i("Service", "Got the Ready Message from Main");
                     startCalculation();
                     break;
                 default:
@@ -63,7 +63,7 @@ public class FibonacciService extends Service {
         timer.scheduleAtFixedRate(new TimerTask(){ public void run() {FibonacciCalculation();}}, 0, 500);
     }
 
-    private void sendMessageToUI(ArrayList<Integer> fibonacciSequence) {
+    private void sendMessageToUI(ArrayList<Long> fibonacciSequence) {
         Message msg = Message.obtain(null, MSG_FIBO_SEQ, fibonacciSequence);
         try {
             clientMessenger.send(msg);
@@ -75,7 +75,7 @@ public class FibonacciService extends Service {
     public void FibonacciCalculation() {
         newElement = FibonacciSequence.get(FibonacciSequence.size()-1) +
                 FibonacciSequence.get(FibonacciSequence.size()-2);
-        if(newElement <= Integer.MAX_VALUE && newElement >= 0) {
+        if(newElement <= Long.MAX_VALUE && newElement >= 0) {
             FibonacciSequence.add(newElement);
             sendMessageToUI(FibonacciSequence);//Not used in testing
         } else {
@@ -84,7 +84,7 @@ public class FibonacciService extends Service {
 
     }
 
-    public ArrayList<Integer> getFibonacciSequence() {
+    public ArrayList<Long> getFibonacciSequence() {
         return FibonacciSequence;
     }
 
